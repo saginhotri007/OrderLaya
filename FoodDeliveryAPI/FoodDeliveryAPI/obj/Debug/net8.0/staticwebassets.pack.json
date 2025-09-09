@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\Uploads\\1785fbc6-48de-4867-b029-ff4b9983f113_pizza.jpg",
+      "PackagePath": "staticwebassets\\Uploads\\1785fbc6-48de-4867-b029-ff4b9983f113_pizza.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\Uploads\\43b87e34-6fa1-47f5-9ddf-b2ce9dd3d39f_1000273506.jpg",
+      "PackagePath": "staticwebassets\\Uploads\\43b87e34-6fa1-47f5-9ddf-b2ce9dd3d39f_1000273506.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant_1756753034898.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant_1756753034898.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant_1756753071206.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant_1756753071206.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant_1756753130018.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant_1756753130018.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant_1756753169076.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant_1756753169076.jpg"
+    },
+    {
+      "Id": "D:\\Food Delivery APP\\API\\FoodDeliveryAPI\\FoodDeliveryAPI\\wwwroot\\images\\restaurant_1756753192844.jpg",
+      "PackagePath": "staticwebassets\\images\\restaurant_1756753192844.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FoodDeliveryAPI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FoodDeliveryAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.FoodDeliveryAPI.props",
+      "PackagePath": "build\\FoodDeliveryAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.FoodDeliveryAPI.props",
+      "PackagePath": "buildMultiTargeting\\FoodDeliveryAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.FoodDeliveryAPI.props",
+      "PackagePath": "buildTransitive\\FoodDeliveryAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
