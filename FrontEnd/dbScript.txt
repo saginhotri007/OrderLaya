@@ -1,0 +1,555 @@
+USE [master]
+GO
+/****** Object:  Database [fooddelivery2025]    Script Date: 13-09-2025 14:39:51 ******/
+CREATE DATABASE [fooddelivery2025]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'fooddelivery2025', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\fooddelivery2025.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'fooddelivery2025_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\fooddelivery2025_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [fooddelivery2025] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [fooddelivery2025].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [fooddelivery2025] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [fooddelivery2025] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [fooddelivery2025] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [fooddelivery2025] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [fooddelivery2025] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [fooddelivery2025] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [fooddelivery2025] SET  MULTI_USER 
+GO
+ALTER DATABASE [fooddelivery2025] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [fooddelivery2025] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [fooddelivery2025] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [fooddelivery2025] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [fooddelivery2025] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [fooddelivery2025] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [fooddelivery2025] SET QUERY_STORE = OFF
+GO
+USE [fooddelivery2025]
+GO
+/****** Object:  Table [dbo].[UserAddresses]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserAddresses](
+	[AddressID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[AddressLine1] [nvarchar](255) NOT NULL,
+	[AddressLine2] [nvarchar](255) NULL,
+	[Landmark] [nvarchar](255) NOT NULL,
+	[City] [nvarchar](100) NULL,
+	[Pincode] [nvarchar](20) NULL,
+	[CreatedAt] [datetime2](7) NULL,
+	[UpdatedAt] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[AddressID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[PasswordHash] [varchar](255) NOT NULL,
+	[Phone] [varchar](15) NULL,
+	[Role] [varchar](50) NOT NULL,
+	[Address] [text] NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MenuItems]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MenuItems](
+	[ItemID] [int] IDENTITY(1,1) NOT NULL,
+	[RestaurantID] [int] NOT NULL,
+	[CategoryID] [int] NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[Price] [decimal](10, 2) NOT NULL,
+	[ImagePath] [varchar](255) NULL,
+	[Availability] [bit] NOT NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ItemID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Orders](
+	[OrderID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[RestaurantID] [int] NOT NULL,
+	[TotalAmount] [decimal](10, 2) NOT NULL,
+	[Status] [varchar](30) NOT NULL,
+	[PaymentStatus] [varchar](20) NOT NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[OrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrderItems]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrderItems](
+	[OrderItemID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderID] [int] NOT NULL,
+	[ItemID] [int] NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[Price] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[OrderItemID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[vw_RestaurantOrders]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   VIEW [dbo].[vw_RestaurantOrders]
+AS
+SELECT 
+    o.OrderID,
+    o.UserID,
+    u.Name AS CustomerName,
+    u.Phone AS CustomerPhone,
+    o.RestaurantID,
+    o.TotalAmount,
+    o.Status,
+    o.PaymentStatus,
+    o.CreatedAt,
+    a.AddressLine1 +' '+ a.AddressLine2+' '+a.Landmark+''+a.City  AS Address,
+    (
+        SELECT 
+            oi.ItemID,
+            m.Name,
+            oi.Quantity,
+            oi.Price
+        FROM OrderItems oi
+        INNER JOIN MenuItems m ON oi.ItemID = m.ItemID
+        WHERE oi.OrderID = o.OrderID
+        FOR JSON PATH
+    ) AS Items
+FROM Orders o
+INNER JOIN Users u ON o.UserID = u.UserID
+LEFT JOIN UserAddresses a ON o.UserID = a.UserID
+
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[Variants] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DeliveryDetails]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DeliveryDetails](
+	[DeliveryID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderID] [int] NOT NULL,
+	[DeliveryUserID] [int] NOT NULL,
+	[Status] [varchar](20) NOT NULL,
+	[EstimatedTime] [datetime] NULL,
+	[DeliveredAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DeliveryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ItemVariants]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ItemVariants](
+	[VariantID] [int] IDENTITY(1,1) NOT NULL,
+	[FoodItemID] [int] NOT NULL,
+	[VariantName] [nvarchar](50) NOT NULL,
+	[Price] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[VariantID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Payments]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Payments](
+	[PaymentID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderID] [int] NOT NULL,
+	[Amount] [decimal](10, 2) NOT NULL,
+	[PaymentMethod] [varchar](20) NOT NULL,
+	[Status] [varchar](20) NOT NULL,
+	[TransactionID] [varchar](100) NULL,
+	[PaidAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PaymentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Restaurants]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Restaurants](
+	[RestaurantID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[Address] [nvarchar](max) NOT NULL,
+	[Phone] [varchar](15) NULL,
+	[Rating] [decimal](3, 1) NULL,
+	[Status] [varchar](20) NOT NULL,
+	[CreatedAt] [datetime] NULL,
+	[ImageURL] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[RestaurantID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Reviews]    Script Date: 13-09-2025 14:39:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Reviews](
+	[ReviewID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[RestaurantID] [int] NOT NULL,
+	[Rating] [int] NOT NULL,
+	[Comment] [nvarchar](max) NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ReviewID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Categories] ON 
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (1, N'Pizza', N'Italian style pizzas with fresh toppings', 1)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (2, N'Burgers', N'Delicious burgers', NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (3, N'Drinks', N'Soft drinks and juices', NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (4, N'Desserts', N'Cakes and sweets', NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (5, N'Pasta', NULL, NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (6, N'Main Course', NULL, 2)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (7, N'South Indian', NULL, NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (8, N'Chinese', NULL, NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (9, N'Dinner', NULL, NULL)
+GO
+INSERT [dbo].[Categories] ([CategoryID], [Name], [Description], [Variants]) VALUES (10, N'Sandwiches', NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Categories] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ItemVariants] ON 
+GO
+INSERT [dbo].[ItemVariants] ([VariantID], [FoodItemID], [VariantName], [Price]) VALUES (2, 5, N'Large', CAST(20.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[ItemVariants] ([VariantID], [FoodItemID], [VariantName], [Price]) VALUES (3, 7, N'Medium', CAST(20.00 AS Decimal(10, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[ItemVariants] OFF
+GO
+SET IDENTITY_INSERT [dbo].[MenuItems] ON 
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (1, 8, 1, N'pappy', NULL, CAST(10.00 AS Decimal(10, 2)), NULL, 1, CAST(N'2025-08-24T23:49:21.643' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (2, 8, 1, N'pa', NULL, CAST(20.00 AS Decimal(10, 2)), NULL, 1, CAST(N'2025-08-24T23:59:25.590' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (3, 8, 2, N'dsd', N'this', CAST(20.00 AS Decimal(10, 2)), NULL, 1, CAST(N'2025-08-25T00:04:13.980' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (4, 8, 1, N'test pizza', N'THIS SI ', CAST(30.00 AS Decimal(10, 2)), NULL, 1, CAST(N'2025-08-25T00:32:49.940' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (5, 8, 1, N'Pizza', N'thsi is up', CAST(20.00 AS Decimal(10, 2)), NULL, 0, CAST(N'2025-08-25T00:35:59.220' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (6, 8, 2, N'panenr', N'this is web', CAST(3.00 AS Decimal(10, 2)), N'/uploads/1785fbc6-48de-4867-b029-ff4b9983f113_pizza.jpg', 1, CAST(N'2025-08-26T00:05:54.130' AS DateTime))
+GO
+INSERT [dbo].[MenuItems] ([ItemID], [RestaurantID], [CategoryID], [Name], [Description], [Price], [ImagePath], [Availability], [CreatedAt]) VALUES (7, 8, 1, N'Nssvb', N'Hdv', CAST(20.00 AS Decimal(10, 2)), N'/uploads/43b87e34-6fa1-47f5-9ddf-b2ce9dd3d39f_1000273506.jpg', 1, CAST(N'2025-09-04T23:55:26.033' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[MenuItems] OFF
+GO
+SET IDENTITY_INSERT [dbo].[OrderItems] ON 
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (1, 4, 4, 1, CAST(30.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (2, 5, 4, 1, CAST(30.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (3, 6, 4, 3, CAST(30.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (4, 6, 5, 3, CAST(20.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (5, 7, 4, 1, CAST(30.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (6, 8, 4, 1, CAST(30.00 AS Decimal(10, 2)))
+GO
+INSERT [dbo].[OrderItems] ([OrderItemID], [OrderID], [ItemID], [Quantity], [Price]) VALUES (7, 8, 3, 1, CAST(20.00 AS Decimal(10, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[OrderItems] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Orders] ON 
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (3, 1, 8, CAST(20.00 AS Decimal(10, 2)), N'Confirmed', N'Pending', CAST(N'2025-08-31T22:42:28.763' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (4, 1, 8, CAST(30.00 AS Decimal(10, 2)), N'Confirmed', N'Pending', CAST(N'2025-08-31T22:44:41.123' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (5, 1, 8, CAST(30.00 AS Decimal(10, 2)), N'Pending', N'Pending', CAST(N'2025-08-31T22:44:41.123' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (6, 1, 8, CAST(150.00 AS Decimal(10, 2)), N'Pending', N'Pending', CAST(N'2025-09-04T20:33:21.907' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (7, 1, 8, CAST(30.00 AS Decimal(10, 2)), N'Pending', N'Pending', CAST(N'2025-09-05T22:47:06.110' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([OrderID], [UserID], [RestaurantID], [TotalAmount], [Status], [PaymentStatus], [CreatedAt]) VALUES (8, 1, 8, CAST(50.00 AS Decimal(10, 2)), N'Pending', N'Pending', CAST(N'2025-09-05T22:52:21.573' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Orders] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Restaurants] ON 
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (8, 1, N'Amezing Pizz', N'this is delicious bcvc', N'12 Patthar road Gopi Takies', N'9634962563', CAST(0.0 AS Decimal(3, 1)), N'Closed', CAST(N'2025-08-24T15:11:34.513' AS DateTime), NULL)
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1008, 1, N'Berry berry', N'This is very ', N'12 patriarchy r', N'7982493795', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-01T22:17:22.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1009, 1, N'Dfd', N'Ffx', N'Fxx', N'587745565', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-01T23:51:09.597' AS DateTime), N'/images/restaurant.jpg')
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1010, 1, N'Fss', N'Ffs', N'Fc', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-01T23:55:14.590' AS DateTime), N'/images/restaurant.jpg')
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1011, 1, N'Fss', N'Ffs', N'Fc', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-02T00:27:14.143' AS DateTime), N'/images/restaurant_1756753034898.jpg')
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1012, 1, N'Ytt', N'Ffs', N'Ggf', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-02T00:27:50.103' AS DateTime), N'/images/restaurant_1756753071206.jpg')
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1013, 1, N'Ytt', N'Ffff', N'Ggf', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-02T00:28:48.850' AS DateTime), N'/images/restaurant_1756753130018.jpg')
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1014, 1, N'Ytt', N'Ffs', N'Ggf', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-02T00:29:30.923' AS DateTime), NULL)
+GO
+INSERT [dbo].[Restaurants] ([RestaurantID], [UserID], [Name], [Description], [Address], [Phone], [Rating], [Status], [CreatedAt], [ImageURL]) VALUES (1015, 1, N'Ytt', N'Ffff', N'Reerrr', N'258708855', CAST(0.0 AS Decimal(3, 1)), N'Open', CAST(N'2025-09-02T00:29:51.920' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Restaurants] OFF
+GO
+SET IDENTITY_INSERT [dbo].[UserAddresses] ON 
+GO
+INSERT [dbo].[UserAddresses] ([AddressID], [UserID], [AddressLine1], [AddressLine2], [Landmark], [City], [Pincode], [CreatedAt], [UpdatedAt]) VALUES (1, 8, N'Hh', N'Hg', N'Gh', N'Vv', N'26088', CAST(N'2025-08-31T10:21:07.5359995' AS DateTime2), CAST(N'2025-08-31T10:21:07.5359995' AS DateTime2))
+GO
+INSERT [dbo].[UserAddresses] ([AddressID], [UserID], [AddressLine1], [AddressLine2], [Landmark], [City], [Pincode], [CreatedAt], [UpdatedAt]) VALUES (2, 1, N'Vgg', N'Vvv', N'Ccc', N'Ccc', N'262001', CAST(N'2025-09-05T17:16:46.4246177' AS DateTime2), CAST(N'2025-09-05T17:16:46.4246177' AS DateTime2))
+GO
+SET IDENTITY_INSERT [dbo].[UserAddresses] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([UserID], [Name], [Email], [PasswordHash], [Phone], [Role], [Address], [CreatedAt]) VALUES (1, N'saurabh', N'saurabh@gmail.com', N'$2a$11$hjIVLuXtzHUjkPB7MAPRQuJLC9HjCgsAspVi/L3RleYk5IX8UMrnS', NULL, N'customer', NULL, CAST(N'2025-08-23T16:25:14.553' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Categori__737584F67C9CC6BD]    Script Date: 13-09-2025 14:39:52 ******/
+ALTER TABLE [dbo].[Categories] ADD UNIQUE NONCLUSTERED 
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Users__A9D105349E6C3221]    Script Date: 13-09-2025 14:39:52 ******/
+ALTER TABLE [dbo].[Users] ADD UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DeliveryDetails] ADD  DEFAULT ('Assigned') FOR [Status]
+GO
+ALTER TABLE [dbo].[MenuItems] ADD  DEFAULT ((1)) FOR [Availability]
+GO
+ALTER TABLE [dbo].[MenuItems] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[OrderItems] ADD  DEFAULT ((1)) FOR [Quantity]
+GO
+ALTER TABLE [dbo].[Orders] ADD  DEFAULT ('Pending') FOR [Status]
+GO
+ALTER TABLE [dbo].[Orders] ADD  DEFAULT ('Pending') FOR [PaymentStatus]
+GO
+ALTER TABLE [dbo].[Orders] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[Payments] ADD  DEFAULT ('Pending') FOR [Status]
+GO
+ALTER TABLE [dbo].[Restaurants] ADD  DEFAULT ((0.0)) FOR [Rating]
+GO
+ALTER TABLE [dbo].[Restaurants] ADD  DEFAULT ('Open') FOR [Status]
+GO
+ALTER TABLE [dbo].[Restaurants] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[Reviews] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[UserAddresses] ADD  DEFAULT (sysutcdatetime()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[UserAddresses] ADD  DEFAULT (sysutcdatetime()) FOR [UpdatedAt]
+GO
+ALTER TABLE [dbo].[Users] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [dbo].[DeliveryDetails]  WITH CHECK ADD FOREIGN KEY([DeliveryUserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[DeliveryDetails]  WITH CHECK ADD FOREIGN KEY([OrderID])
+REFERENCES [dbo].[Orders] ([OrderID])
+GO
+ALTER TABLE [dbo].[ItemVariants]  WITH CHECK ADD  CONSTRAINT [FK_ItemVariants_MenuItems] FOREIGN KEY([FoodItemID])
+REFERENCES [dbo].[MenuItems] ([ItemID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ItemVariants] CHECK CONSTRAINT [FK_ItemVariants_MenuItems]
+GO
+ALTER TABLE [dbo].[MenuItems]  WITH CHECK ADD FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[MenuItems]  WITH CHECK ADD FOREIGN KEY([RestaurantID])
+REFERENCES [dbo].[Restaurants] ([RestaurantID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[OrderItems]  WITH CHECK ADD FOREIGN KEY([ItemID])
+REFERENCES [dbo].[MenuItems] ([ItemID])
+GO
+ALTER TABLE [dbo].[OrderItems]  WITH CHECK ADD FOREIGN KEY([OrderID])
+REFERENCES [dbo].[Orders] ([OrderID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([RestaurantID])
+REFERENCES [dbo].[Restaurants] ([RestaurantID])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Payments]  WITH CHECK ADD FOREIGN KEY([OrderID])
+REFERENCES [dbo].[Orders] ([OrderID])
+GO
+ALTER TABLE [dbo].[Restaurants]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Reviews]  WITH CHECK ADD FOREIGN KEY([RestaurantID])
+REFERENCES [dbo].[Restaurants] ([RestaurantID])
+GO
+ALTER TABLE [dbo].[Reviews]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[DeliveryDetails]  WITH CHECK ADD CHECK  (([Status]='Failed' OR [Status]='Delivered' OR [Status]='PickedUp' OR [Status]='Assigned'))
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD CHECK  (([PaymentStatus]='Refunded' OR [PaymentStatus]='Paid' OR [PaymentStatus]='Pending'))
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD CHECK  (([Status]='Cancelled' OR [Status]='Delivered' OR [Status]='OutForDelivery' OR [Status]='Preparing' OR [Status]='Confirmed' OR [Status]='Pending'))
+GO
+ALTER TABLE [dbo].[Payments]  WITH CHECK ADD CHECK  (([PaymentMethod]='Wallet' OR [PaymentMethod]='UPI' OR [PaymentMethod]='DebitCard' OR [PaymentMethod]='CreditCard' OR [PaymentMethod]='COD'))
+GO
+ALTER TABLE [dbo].[Payments]  WITH CHECK ADD CHECK  (([Status]='Failed' OR [Status]='Completed' OR [Status]='Pending'))
+GO
+ALTER TABLE [dbo].[Restaurants]  WITH CHECK ADD CHECK  (([Status]='Closed' OR [Status]='Open'))
+GO
+ALTER TABLE [dbo].[Reviews]  WITH CHECK ADD CHECK  (([Rating]>=(1) AND [Rating]<=(5)))
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD CHECK  (([Role]='Admin' OR [Role]='Delivery' OR [Role]='Restaurant' OR [Role]='Customer'))
+GO
+USE [master]
+GO
+ALTER DATABASE [fooddelivery2025] SET  READ_WRITE 
+GO
