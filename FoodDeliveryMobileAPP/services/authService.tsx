@@ -13,7 +13,7 @@ interface LoginResponse {
   };
 }
 
-const BASE_URL = "http://192.168.10.10:7205/api";
+const BASE_URL = "http://122.161.67.38:7205/api";
 
 export const login = async (phone: string, password: string) => {
   const response = await axios.post<LoginResponse>(`${BASE_URL}/auth/login`, {
