@@ -29,6 +29,13 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddControllers();
 
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
+builder.Services.AddControllersWithViews();
+
 // ✅ Add CORS policy
 builder.Services.AddCors(options =>
 {
@@ -111,7 +118,7 @@ app.UseCors("AllowReactAppAndNative");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllers();
 
 app.Run();
