@@ -144,5 +144,18 @@ namespace FoodDeliveryAPI.Controllers
             return Ok(new { success = true, message = "Order status updated successfully" });
         }
 
+        [HttpGet("Orders")]
+        public async Task<IActionResult> GetOrdersByUser([FromQuery] int userID)
+        {
+            var Orders = await _ordersRepo.GetAllOrders();
+
+            // Filter by UserID
+            var userOrders = Orders.Where(r => r.UserID == userID).ToList();
+
+            if (!userOrders.Any())
+                return NotFound("No Orders found for this user");
+
+            return Ok(new { success = true, data = userOrders });
+        }
     }
 }
