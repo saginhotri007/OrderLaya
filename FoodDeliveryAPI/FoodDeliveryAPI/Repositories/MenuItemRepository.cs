@@ -117,7 +117,8 @@ namespace FoodDeliveryAPI.Repositories
 
         public async Task<IEnumerable<MenuItem>> GetMenuItemsByRestaurant(int restaurantId)
         {
-            string sql = @"SELECT ItemID,RestaurantID,CategoryID,Name,Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+            string sql = @"SELECT ItemID,RestaurantID,m.Name,C.Name as CategoryName,m.Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+             inner join Categories C on C.CategoryID=m.CategoryId 
               WHERE RestaurantID = @RestaurantID ";
             var items = await _db.QueryAsync<MenuItem>(sql, new { RestaurantID = restaurantId });
             return items;

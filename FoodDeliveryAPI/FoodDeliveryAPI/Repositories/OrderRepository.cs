@@ -41,6 +41,13 @@ namespace FoodDeliveryAPI.Repositories
             var orders = await _db.QueryAsync<RestaurantsOrderDTO>(sql);
             return orders;
         }
+
+        public async Task<IEnumerable<RestaurantsOrderDTO>> GetAllCustomerOrders()
+        {
+            string sql = "SELECT * FROM vw_CustomerOrders";
+            var orders = await _db.QueryAsync<RestaurantsOrderDTO>(sql);
+            return orders;
+        }
         public async Task<bool> UpdateOrderStatus(int orderID, string status)
         {
             var sql = @"UPDATE Orders 
