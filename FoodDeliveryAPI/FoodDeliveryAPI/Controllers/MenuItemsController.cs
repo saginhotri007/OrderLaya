@@ -43,6 +43,13 @@ namespace FoodDeliveryAPI.Controllers
             return Ok(new { success = true, data = items });
         }
 
+        [HttpGet("GetRestaurantByCategory")]
+        public async Task<IActionResult> GetRestaurantByCategory([FromQuery] int CategoryId)
+        {
+            var items = await _menuItemRepo.GetRestaurantByCategory(CategoryId);
+            return Ok(new { success = true, data = items });
+        }
+
         [HttpPost("menuitem")]
         public async Task<IActionResult> AddMenuItem([FromForm] CreateMenuItemRequest request, IFormFile? image)
         {

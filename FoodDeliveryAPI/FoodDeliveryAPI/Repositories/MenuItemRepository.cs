@@ -123,6 +123,12 @@ namespace FoodDeliveryAPI.Repositories
             var items = await _db.QueryAsync<MenuItem>(sql, new { RestaurantID = restaurantId });
             return items;
         }
-
+        public async Task<IEnumerable<MenuItem>> GetRestaurantByCategory(int CategoryId)
+        {
+            string sql = @"SELECT ItemID,RestaurantID,CategoryID,Name,Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+              WHERE CategoryID = @CategoryID";
+            var items = await _db.QueryAsync<MenuItem>(sql, new { CategoryID = CategoryId });
+            return items;
+        }
     }
 }
