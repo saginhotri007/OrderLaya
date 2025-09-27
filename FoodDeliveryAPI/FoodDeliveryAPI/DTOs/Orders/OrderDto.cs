@@ -36,6 +36,7 @@ namespace FoodDeliveryAPI.DTOs.Orders
         public int OrderID { get; set; }
         public int UserID { get; set; }
         public int RestaurantID { get; set; }
+        public string RestaurantName { get; set; }
         public decimal TotalAmount { get; set; }
         public string Status { get; set; }
         public string PaymentStatus { get; set; }

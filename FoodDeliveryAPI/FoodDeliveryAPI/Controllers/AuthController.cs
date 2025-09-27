@@ -69,7 +69,7 @@ public class AuthController : ControllerBase
         {
             token,
             expiresAt,
-            user = new { user.UserID, user.Name, user.Email, user.Role }
+            user = new { user.UserID, user.Name, user.Email, user.Role,user.Phone }
         });
     }
 

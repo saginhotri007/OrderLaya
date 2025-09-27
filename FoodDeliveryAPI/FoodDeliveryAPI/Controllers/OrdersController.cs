@@ -147,7 +147,7 @@ namespace FoodDeliveryAPI.Controllers
         [HttpGet("Orders")]
         public async Task<IActionResult> GetOrdersByUser([FromQuery] int userID)
         {
-            var Orders = await _ordersRepo.GetAllOrders();
+            var Orders = await _ordersRepo.GetAllCustomerOrders();
 
             // Filter by UserID
             var userOrders = Orders.Where(r => r.UserID == userID).ToList();

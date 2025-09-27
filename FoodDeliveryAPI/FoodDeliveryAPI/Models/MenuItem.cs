@@ -5,6 +5,8 @@
     public int ItemID { get; set; }
     public int RestaurantID { get; set; }
     public int? CategoryID { get; set; }
+    public string CategoryName { get; set; }
+
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public decimal Price { get; set; }

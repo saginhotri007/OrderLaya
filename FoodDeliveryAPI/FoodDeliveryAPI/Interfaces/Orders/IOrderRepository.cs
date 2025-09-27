@@ -10,6 +10,7 @@ namespace FoodDeliveryAPI.Interfaces.Orders
         Task<int> AddOrderAsync(Order order);
         Task AddOrderItemsAsync(List<OrderItem> orderItems);
         Task<IEnumerable<RestaurantsOrderDTO>> GetAllOrders();
+        Task<IEnumerable<RestaurantsOrderDTO>> GetAllCustomerOrders();
         Task<bool> UpdateOrderStatus(int orderId, string status);
         
 
