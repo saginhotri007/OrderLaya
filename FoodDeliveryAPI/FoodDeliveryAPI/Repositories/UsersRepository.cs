@@ -2,6 +2,7 @@
 using System.Data;
 using FoodDeliveryAPI.Models;
 using FoodDeliveryAPI.Interfaces.User;
+using System.Numerics;
 
 public class UsersRepository : IUsersRepository
 {
@@ -14,10 +15,30 @@ public class UsersRepository : IUsersRepository
         return await _db.ExecuteScalarAsync<int>(sql, user);
     }
 
-    public Task<int> CreateUserAsync(User user)
+    public async Task<int> CreateUserAsync(User user)
     {
-        string sql = "INSERT INTO Users (Name, Email, PasswordHash, Role) VALUES (@Name, @Email, @PasswordHash, @Role); SELECT CAST(SCOPE_IDENTITY() as int);";
-        return  _db.ExecuteScalarAsync<int>(sql, user);
+
+        string checkSql = "SELECT UserID FROM Users WHERE Phone = @Phone";
+        var existingUserId = await _db.ExecuteScalarAsync<int?>(checkSql, new { user.Phone });
+
+        if (existingUserId.HasValue)
+        {
+            // Update CreatedAt for existing user
+            string updateSql = "UPDATE Users SET CreatedAt = GETDATE() WHERE UserID = @UserID";
+            await _db.ExecuteAsync(updateSql, new { UserID = existingUserId.Value });
+
+            return existingUserId.Value;
+        }
+        else
+        {
+            // Insert new user
+            string insertSql = @"
+            INSERT INTO Users (Name, Email, PasswordHash, Role, Phone, CreatedAt) 
+            VALUES (@Name, @Email, @PasswordHash, @Role, @Phone, GETDATE()); 
+            SELECT CAST(SCOPE_IDENTITY() as int);";
+
+            return await _db.ExecuteScalarAsync<int>(insertSql, user);
+        }
     }
 
     public Task<IEnumerable<User>> GetAllAsync()
@@ -29,6 +50,16 @@ public class UsersRepository : IUsersRepository
     {
         string sql = "SELECT * FROM Users WHERE Email = @Email";
         var user =  _db.QueryFirstOrDefaultAsync<User>(sql, new { Email = email });
+
+        if (user == null)
+            throw new Exception("User not found");
+        return user;
+
+    }
+    public Task<User?> GetByPhoneAsync(string phone)
+    {
+        string sql = "SELECT * FROM Users WHERE Phone = @Phone";
+        var user = _db.QueryFirstOrDefaultAsync<User>(sql, new { Phone = phone });
 
         if (user == null)
             throw new Exception("User not found");

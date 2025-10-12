@@ -9,6 +9,7 @@ namespace FoodDeliveryAPI.DTOs.Orders
         public List<OrderItemDto> Items { get; set; } = new();
         // optional delivery address override
         public string? DeliveryAddress { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 
     public class OrderItemDto

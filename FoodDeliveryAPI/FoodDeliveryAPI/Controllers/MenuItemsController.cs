@@ -125,5 +125,13 @@ namespace FoodDeliveryAPI.Controllers
             return Ok(new { success = true, message = "Menu item updated successfully" });
         }
 
+
+        [HttpGet("GetRecommendedItems")]
+        public async Task<IActionResult> GetRecommendedItems()
+        {
+            var items = await _menuItemRepo.GetRecommendedItems();
+            return Ok(new { success = true, data = items });
+        }
+
     }
 }

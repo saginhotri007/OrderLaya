@@ -101,7 +101,7 @@ namespace FoodDeliveryAPI.Controllers
             {
                 if (Image != null && Image.Length > 0)
                 {
-                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads");
                     if (!Directory.Exists(uploadDir))
                         Directory.CreateDirectory(uploadDir);
 
@@ -113,7 +113,7 @@ namespace FoodDeliveryAPI.Controllers
                         await Image.CopyToAsync(stream);
                     }
 
-                    restaurant.ImageUrl = "/images/" + fileName;
+                    restaurant.ImageURL = "/Uploads/" + fileName;
                 }
 
                 var updatedRestaurant = await _restaurantRepo.UpdateRestaurant(restaurant);
@@ -134,6 +134,12 @@ namespace FoodDeliveryAPI.Controllers
             }
         }
 
+        [HttpDelete("deleterestaurant")]
+        public async Task<IActionResult> DeleteRestaurant([FromQuery] int RestaurantId)
+        {
+            var restaurants = await _restaurantRepo.DeleteRestaurant(RestaurantId);
 
+            return Ok(new { success = true});
+        }
     }
 }

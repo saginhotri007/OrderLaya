@@ -69,7 +69,7 @@ namespace FoodDeliveryAPI.Controllers
             {
                 UserID = request.UserID, // Replace with your actual logic to get logged-in user ID
                 RestaurantID = request.RestaurantID,
-                TotalAmount = request.Items.Sum(i => i.Quantity * i.Price),
+                TotalAmount = request.TotalAmount,
                 Status = "Pending", // or any default
                 PaymentStatus = "Unpaid", // default
                 CreatedAt = DateTime.UtcNow,

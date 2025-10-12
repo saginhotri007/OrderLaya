@@ -8,5 +8,6 @@ namespace FoodDeliveryAPI.Interfaces.Restaurant
         Task<IEnumerable<RestaurantDto>> GetAllRestaurant();
         Task<CreateRestaurantRequest> AddRestaurant(CreateRestaurantRequest restaurant);
         Task<RestaurantDto> UpdateRestaurant(RestaurantDto restaurant);
+        Task<bool> DeleteRestaurant(int RestaurantID);
     }
 }

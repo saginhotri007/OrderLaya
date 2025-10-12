@@ -117,7 +117,7 @@ namespace FoodDeliveryAPI.Repositories
 
         public async Task<IEnumerable<MenuItem>> GetMenuItemsByRestaurant(int restaurantId)
         {
-            string sql = @"SELECT ItemID,RestaurantID,m.Name,C.Name as CategoryName,m.Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+            string sql = @"SELECT ItemID,RestaurantID,m.Name,C.Name as CategoryName,m.ImagePath,m.Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
              inner join Categories C on C.CategoryID=m.CategoryId 
               WHERE RestaurantID = @RestaurantID ";
             var items = await _db.QueryAsync<MenuItem>(sql, new { RestaurantID = restaurantId });
@@ -125,9 +125,17 @@ namespace FoodDeliveryAPI.Repositories
         }
         public async Task<IEnumerable<MenuItem>> GetRestaurantByCategory(int CategoryId)
         {
-            string sql = @"SELECT ItemID,RestaurantID,CategoryID,Name,Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+            string sql = @"SELECT ItemID,RestaurantID,CategoryID,Name,m.ImagePath,Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
               WHERE CategoryID = @CategoryID";
             var items = await _db.QueryAsync<MenuItem>(sql, new { CategoryID = CategoryId });
+            return items;
+        }
+
+        public async Task<IEnumerable<MenuItem>> GetRecommendedItems()
+        {
+            string sql = @"SELECT top 5 ItemID,RestaurantID,m.ImagePath,CategoryID,Name,Description,m.Price,Availability,VariantName as Variant FROM MenuItems m left join ItemVariants I on m.ItemID=I.FoodItemID 
+              ";
+            var items = await _db.QueryAsync<MenuItem>(sql);
             return items;
         }
     }
